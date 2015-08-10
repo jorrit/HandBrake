@@ -1221,10 +1221,13 @@ namespace HandBrakeWPF.ViewModels
         /// </summary>
         public void BrowseSendFileTo()
         {
-            VistaOpenFileDialog dialog = new VistaOpenFileDialog { Filter = "All files (*.*)|*.*" };
-            dialog.ShowDialog();
-            this.SendFileTo = Path.GetFileNameWithoutExtension(dialog.FileName);
-            this.sendFileToPath = dialog.FileName;
+            VistaOpenFileDialog dialog = new VistaOpenFileDialog { Filter = "All files (*.*)|*.*", FileName = this.sendFileToPath };
+            bool? dialogResult = dialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                this.SendFileTo = Path.GetFileNameWithoutExtension(dialog.FileName);
+                this.sendFileToPath = dialog.FileName;
+            }
         }
 
         /// <summary>
@@ -1232,9 +1235,12 @@ namespace HandBrakeWPF.ViewModels
         /// </summary>
         public void BrowseAutoNamePath()
         {
-            VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog { Description = "Please select a folder.", UseDescriptionForTitle = true };
-            dialog.ShowDialog();
-            this.AutoNameDefaultPath = dialog.SelectedPath;
+            VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog { Description = "Please select a folder.", UseDescriptionForTitle = true, SelectedPath = this.AutoNameDefaultPath };
+            bool? dialogResult = dialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                this.AutoNameDefaultPath = dialog.SelectedPath;
+            }
         }
 
         /// <summary>
@@ -1242,9 +1248,12 @@ namespace HandBrakeWPF.ViewModels
         /// </summary>
         public void BrowseVlcPath()
         {
-            VistaOpenFileDialog dialog = new VistaOpenFileDialog { Filter = "All files (*.exe)|*.exe" };
-            dialog.ShowDialog();
-            this.VLCPath = dialog.FileName;
+            VistaOpenFileDialog dialog = new VistaOpenFileDialog { Filter = "All files (*.exe)|*.exe", FileName = this.VLCPath };
+            bool? dialogResult = dialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                this.VLCPath = dialog.FileName;
+            }
         }
 
         /// <summary>
@@ -1252,9 +1261,12 @@ namespace HandBrakeWPF.ViewModels
         /// </summary>
         public void BrowseLogPath()
         {
-            VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog { Description = "Please select a folder.", UseDescriptionForTitle = true };
-            dialog.ShowDialog();
-            this.LogDirectory = dialog.SelectedPath;
+            VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog { Description = "Please select a folder.", UseDescriptionForTitle = true, SelectedPath = this.LogDirectory };
+            bool? dialogResult = dialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                this.LogDirectory = dialog.SelectedPath;
+            }
         }
 
         /// <summary>

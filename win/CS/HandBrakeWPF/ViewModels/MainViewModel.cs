@@ -1491,11 +1491,14 @@ namespace HandBrakeWPF.ViewModels
         public void FolderScan()
         {
             VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog { Description = Resources.Main_PleaseSelectFolder, UseDescriptionForTitle = true };
-            dialog.ShowDialog();
+            bool? dialogResult = dialog.ShowDialog();
 
-            ShowSourceSelection = false;
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                ShowSourceSelection = false;
 
-            this.StartScan(dialog.SelectedPath, this.TitleSpecificScan);
+                this.StartScan(dialog.SelectedPath, this.TitleSpecificScan);
+            }
         }
 
         /// <summary>
@@ -1504,11 +1507,14 @@ namespace HandBrakeWPF.ViewModels
         public void FileScan()
         {
             OpenFileDialog dialog = new OpenFileDialog { Filter = "All files (*.*)|*.*" };
-            dialog.ShowDialog();
+            bool? dialogResult = dialog.ShowDialog();
 
-            ShowSourceSelection = false;
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                ShowSourceSelection = false;
 
-            this.StartScan(dialog.FileName, this.TitleSpecificScan);
+                this.StartScan(dialog.FileName, this.TitleSpecificScan);
+            }
         }
 
         /// <summary>
@@ -1849,9 +1855,12 @@ namespace HandBrakeWPF.ViewModels
         public void PresetImport()
         {
             OpenFileDialog dialog = new OpenFileDialog { Filter = "Preset Files|*.json;*.plist", CheckFileExists = true };
-            dialog.ShowDialog();
-            this.presetService.Import(dialog.FileName);
-            this.NotifyOfPropertyChange(() => this.Presets);
+            bool? dialogResult = dialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                this.presetService.Import(dialog.FileName);
+                this.NotifyOfPropertyChange(() => this.Presets);
+            }
         }
 
         /// <summary>

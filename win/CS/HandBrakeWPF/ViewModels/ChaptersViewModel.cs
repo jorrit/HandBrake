@@ -104,8 +104,8 @@ namespace HandBrakeWPF.ViewModels
                     DefaultExt = "csv",
                     CheckPathExists = true
                 };
-            saveFileDialog.ShowDialog();
-            if (!string.IsNullOrEmpty(saveFileDialog.FileName))
+            bool? dialogResult = saveFileDialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value && !string.IsNullOrEmpty(saveFileDialog.FileName))
             {
                 this.ExportChaptersToCSV(saveFileDialog.FileName);
             }
@@ -153,10 +153,10 @@ namespace HandBrakeWPF.ViewModels
         public void Import()
         {
             var dialog = new OpenFileDialog { Filter = "CSV files (*.csv)|*.csv", CheckFileExists = true };
-            dialog.ShowDialog();
+            bool? dialogResult  = dialog.ShowDialog();
             string filename = dialog.FileName;
 
-            if (string.IsNullOrEmpty(filename))
+            if (!dialogResult.HasValue || !dialogResult.Value || string.IsNullOrEmpty(filename))
             {
                 return;
             }
